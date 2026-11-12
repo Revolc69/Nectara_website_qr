@@ -28,16 +28,18 @@
       --pill-bg: rgba(255,255,255,.45); --pill-border: rgba(255,255,255,.75);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+    }
     body {
       font-family: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--ink);
       min-height: 100vh;
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
@@ -50,16 +52,16 @@
       text-align: center; 
       isolation: isolate; 
       width: 100%;
-      overflow: hidden;
+      overflow: hidden !important; /* CRITICAL FIX: Clips wide dome background to prevent horizontal swiping */
     }
     .dome {
       position: absolute; z-index: -1;
       top: -520px; left: 50%; transform: translateX(-50%);
-      width: 100vw; height: 1080px;
+      width: min(1400px, 160vw); height: 1080px;
       border-radius: 0 0 50% 50%;
       background: linear-gradient(180deg, var(--dome-1) 0%, var(--dome-2) 62%, var(--dome-3) 100%);
       box-shadow: 0 24px 60px var(--dome-glow);
-      overflow: hidden;
+      pointer-events: none;
     }
     .dome::after { /* soft sheen */
       content: ""; position: absolute; inset: 0;
